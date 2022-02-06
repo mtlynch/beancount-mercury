@@ -83,7 +83,6 @@ workflows:
       - publish:
           requires:
             - build_python
-            - e2e
             - prepare_pypi_package
           filters:
             tags:
