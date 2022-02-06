@@ -43,9 +43,9 @@ def test_extracts_single_transaction_without_matching_account(tmp_path):
             account='Assets:Checking:Mercury').extract(f)
 
     assert _unindent("""
-            2022-02-04 * "Joe Vendor" "Send Money transaction initiated on Mercury - From Dummy, LLC for bowling balls"
-              Assets:Checking:Mercury  -550.00 USD
-            """.rstrip()) == _stringify_directives(directives).strip()
+        2022-02-04 * "Joe Vendor" "Send Money transaction initiated on Mercury - From Dummy, LLC for bowling balls"
+            Assets:Checking:Mercury  -550.00 USD
+        """.rstrip()) == _stringify_directives(directives).strip()
 
 
 def test_extracts_single_transaction_with_matching_account(tmp_path):
@@ -65,7 +65,7 @@ def test_extracts_single_transaction_with_matching_account(tmp_path):
             ]).extract(f)
 
     assert _unindent("""
-            2022-02-04 * "Bowlers Paradise" "Send Money transaction initiated on Mercury - From Dummy, LLC for bowling balls"
-              Assets:Checking:Mercury                            -550.00 USD
-              Expenses:Equipment:Bowling-Balls:Bowlers-Paradise   550.00 USD
-            """.rstrip()) == _stringify_directives(directives).strip()
+        2022-02-04 * "Bowlers Paradise" "Send Money transaction initiated on Mercury - From Dummy, LLC for bowling balls"
+            Assets:Checking:Mercury                            -550.00 USD
+            Expenses:Equipment:Bowling-Balls:Bowlers-Paradise   550.00 USD
+        """.rstrip()) == _stringify_directives(directives).strip()
