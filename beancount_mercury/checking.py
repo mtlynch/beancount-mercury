@@ -10,7 +10,9 @@ from beancount.core import flags
 from beancount.core import number as beancount_number
 from beancount.ingest import importer
 
-_COLUMN_DATE = 'Date'
+_COLUMN_DATE = 'Date (UTC)'
+# Prior to 2022-11, the date column label didn't have the UTC designation.
+_COLUMN_DATE_LEGACY = 'Date'
 _COLUMN_PAYEE = 'Description'
 _COLUMN_DESCRIPTION = 'Bank Description'
 _COLUMN_REFERENCE = 'Reference'
@@ -60,7 +62,14 @@ class CheckingImporter(importer.ImporterProtocol):
     def _extract_transaction_from_row(self, row, metadata):
         if row[_COLUMN_STATUS] and row[_COLUMN_STATUS] == 'Failed':
             return None
-        transaction_date = datetime.datetime.strptime(row[_COLUMN_DATE],
+
+        date_raw = None
+        if _COLUMN_DATE in row:
+            date_raw = row[_COLUMN_DATE]
+        else:
+            date_raw = row[_COLUMN_DATE_LEGACY]
+
+        transaction_date = datetime.datetime.strptime(date_raw,
                                                       '%m-%d-%Y').date()
 
         payee = titlecase.titlecase(row[_COLUMN_PAYEE])
