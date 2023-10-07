@@ -4,6 +4,9 @@ import os.path
 
 import setuptools
 
+with open('requirements.txt') as f:
+    required_packages = f.read().splitlines()
+
 setuptools.setup(
     name='beancount-mercury',
     long_description=open(
@@ -17,6 +20,6 @@ setuptools.setup(
     keywords="mercury beancount bookkeeping finance",
     url='https://github.com/mtlynch/beancount-mercury.git',
     packages=['beancount_mercury'],
-    install_requires=[],
+    install_requires=[required_packages],
     python_requires='>=3.9',
 )
